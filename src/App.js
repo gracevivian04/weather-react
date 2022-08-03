@@ -3,6 +3,7 @@ import './App.css';
 
 export default function App() {
     <div className="App"> 
+    <div className="container">
     <h1> Weather App </h1>
     <footer>
       This project is coded by Grace Vivian and is 
@@ -10,5 +11,6 @@ export default function App() {
     target="_blank">
     </a>
     </footer>
+    </div>
     </div>
 }
