@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import axios from "axios";
+import formattedDate from "/formattedDate";
 import "./Weather.css";
 
-export default function Weather(){
+export default function Weather(props){
     const [weatherData, setWeatherData] = useState({ready:false});
     function handleResponse(response){
         console.log(response.data);
@@ -10,8 +11,8 @@ export default function Weather(){
             ready: true,
             temperature: response.data.main.temp,
             wind: response.data.main.speed,
-            date: "Wednesday, 7:00",
-            description: response.data.main.description,
+            date: new Date(response.data.dt * 1000),
+            description: response.data.weather[0].description,
             humidity: response.data.main.humidity,
             city: response.data.name,
         });
@@ -20,8 +21,7 @@ export default function Weather(){
 
     function search(){
         const apiKey="cdec7dc86f02673d413e36697779fb47";
-        let city ="London";
-    let apiUrl=`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+    let apiUrl=`https://api.openweathermap.org/data/2.5/weather?q=${props.defaultCity}&appid=${apiKey}&units=metric`;
     axios.get(apiUrl).then(handleResponse);
     }
 
@@ -39,7 +39,8 @@ export default function Weather(){
         </form>
         <h1>{weatherData.city}</h1> 
         <ul>
-            <li>{weatherData.date}</li>
+            <li>
+                <formattedDate date={weatherData.date} /> </li>
             <li className="text-capitalize">{weatherData.description}</li>
         </ul>
         <div className="row">
